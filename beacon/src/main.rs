@@ -6,6 +6,7 @@ use std::io::Write;
 use std::os::unix::net::UnixStream;
 use std::path::Path;
 use chrono::{DateTime, Local};
+use std::{thread, time};
 
 use beacon_controller::models::actions::BeaconAction;
 use beacon_controller::models::actions::BeaconAction::{ExecuteCommand, FallAsleep};
@@ -91,6 +92,8 @@ fn run() {
             _ => println!("No communication")
         }
 
+
+
         //Check duration since last communication with server
         if LAST_ENTRY.with(|instant| {
             Local::now().signed_duration_since(*instant.borrow()).num_seconds() >= 2
@@ -136,3 +139,17 @@ fn update_time() {
 fn get_latest_action(mut simu_request: &Vec<BeaconAction>) -> Option<BeaconAction> {
     return simu_request.pop()
 }
+
+
+// les sleep a keeep
+
+fn new_napping_time(entry_string: &str) -> u64 {
+    //placeholder function
+    let mut entry_iter = entry_string.split(" ");
+    entry_iter.next();
+    return entry_iter.next().unwrap().parse::<u64>().unwrap()
+}
+
+        time_of_nap = new_napping_time(entry_string);
+        //durée du sleep
+        thread::sleep(time::Duration::from_secs(time_of_nap));
