@@ -7,7 +7,7 @@ fn main() {
 
 fn read_entry() -> &'static str {
     //placeholder fonction
-    return "cmd switch toto"
+    return "cmd swittch toto"
 }
 
 fn transmit_payload_to_next_beacon(entry_string:&str){
@@ -49,7 +49,7 @@ fn exec_command(cmd: &str) -> String {
 fn run(){
     //fonction principale d'execution
     let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
-
+    let mut cpt: u32 = 0;
     //boucle principale du programme
     loop {
         if is_operating_as_transmition_tower {
@@ -58,7 +58,11 @@ fn run(){
             println!("je suis une tour");
         } else {
             println!("je suis actif");
+        }
+
+        if cpt>5 {
             break();
         }
+        cpt = cpt+1
     }
 }
