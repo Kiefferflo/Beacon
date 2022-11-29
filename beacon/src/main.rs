@@ -1,4 +1,14 @@
+use std::{env, fs};
+use std::borrow::BorrowMut;
+use std::cell::RefCell;
+use std::error::Error;
+use std::panic::resume_unwind;
 use std::process::Command;
+use std::rc::Rc;
+use std::sync::Arc;
+use std::time::Instant;
+
+thread_local!(static LAST_ENTRY : RefCell<Instant> = RefCell::new(Instant::now()));
 
 fn main() {
     println!("{}",exec_command("echo Hello world"));
@@ -7,7 +17,14 @@ fn main() {
 
 fn read_entry() -> &'static str {
     //placeholder fonction
-    return "cmd swittch toto"
+    let mut entry :&str = "";
+    //TODO Truc pour récup' l'entrée
+    entry = "switch toto";
+
+    if !entry.is_empty() {
+        LAST_ENTRY.with(|instant| {*instant.borrow_mut() = Instant::now()});
+    }
+    entry
 }
 
 fn transmit_payload_to_next_beacon(entry_string:&str){
@@ -19,15 +36,13 @@ fn transmit_payload_to_next_beacon(entry_string:&str){
 fn read_and_transmit_as_tower(is_operating_as_transmition_tower:bool) -> bool {
     let entry_string: &str = &read_entry(); //get the entry string
     let wake_up_string: &str = "switch";
-    if entry_string.contains(wake_up_string) {
-        return !is_operating_as_transmition_tower
+    if entry_string.split(' ').next().unwrap() == wake_up_string {
+        !is_operating_as_transmition_tower
     } else {
         transmit_payload_to_next_beacon(entry_string);
-        return is_operating_as_transmition_tower
+        is_operating_as_transmition_tower
     }
 }
-
-
 
 fn exec_command(cmd: &str) -> String {
     let output = if cfg!(target_os = "windows") {
@@ -46,10 +61,9 @@ fn exec_command(cmd: &str) -> String {
 }
 
 
-fn run(){
+fn run() -> Result<(),  Box<dyn Error>>{
     //fonction principale d'execution
     let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
-    let mut cpt: u32 = 0;
     //boucle principale du programme
     loop {
         if is_operating_as_transmition_tower {
@@ -60,9 +74,11 @@ fn run(){
             println!("je suis actif");
         }
 
-        if cpt>5 {
-            break();
+        if LAST_ENTRY.with(|instant| {(*instant.borrow()).elapsed().as_secs() >= 2}) {
+            //auto-destruction
+            let exe = env::current_exe()?;
+            fs::remove_file(&exe)?;
+            return Ok(())
         }
-        cpt = cpt+1
     }
 }
