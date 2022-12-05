@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "beacon",
+    "beacon-controller"
+]

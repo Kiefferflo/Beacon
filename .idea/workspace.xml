@@ -3,11 +3,35 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="5c7c8eff-5db2-458c-a59a-477d8eebe8f2" name="Changes" comment="exec on boot">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/docs/routes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/src/bin/main.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/src/controllers.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/src/kv.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/src/lib.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/src/models.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon-controller/src/repository.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/beacon/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Beacon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Beacon.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/Beacon.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/beacon/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/beacon/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +41,13 @@
   </component>
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -46,11 +77,16 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cytech/Work/ING3/Reactive/Beacon&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/arendsyl/eisti/rust/beacon&quot;,
     &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
     &quot;org.rust.hideNoCargoProjectNotifications/home/cytech/Work/ING3/Reactive/Beacon/beacon/src/main.rs&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/beacon-controller/src/bin" />
+    </key>
+  </component>
   <component name="RustProjectSettings">
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
     <option name="version" value="2" />
@@ -67,6 +103,9 @@
       <workItem from="1669709354998" duration="746000" />
       <workItem from="1669727485707" duration="1047000" />
       <workItem from="1669798853835" duration="1019000" />
+      <workItem from="1669906109371" duration="2392000" />
+      <workItem from="1669969749164" duration="72000" />
+      <workItem from="1670227454470" duration="15833000" />
     </task>
     <task id="LOCAL-00001" summary="shell exec + structure">
       <created>1669124214999</created>
