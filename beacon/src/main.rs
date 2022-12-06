@@ -86,7 +86,6 @@ fn run() {
         writeln!(ftime, "{}", Local::now().to_rfc3339()).expect("failed to write in file");
     }
 
-    println!("{}","just before loop");
     //boucle principale du programme
     loop {
         if is_operating_as_transmition_tower {
