@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c7c8eff-5db2-458c-a59a-477d8eebe8f2" name="Changes" comment="exec on boot">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/src/main.rs" afterDir="false" />
-    </list>
+    <list default="true" id="5c7c8eff-5db2-458c-a59a-477d8eebe8f2" name="Changes" comment="exec on boot" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

