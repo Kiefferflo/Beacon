@@ -131,6 +131,7 @@ fn update_time() {
     }).expect("Failed to write");
 }
 
+
 //placeholder
 fn get_latest_action(mut simu_request: &Vec<BeaconAction>) -> Option<BeaconAction> {
     return simu_request.pop()
