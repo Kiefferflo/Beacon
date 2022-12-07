@@ -1,5 +1,5 @@
 mod controllers;
-mod models;
+pub mod models;
 mod repository;
 mod kv;
 
