@@ -1,3 +1,4 @@
+use std::time::Duration;
 use std::{env, fs};
 use std::cell::RefCell;
 use std::fs::File;
@@ -68,7 +69,8 @@ fn run() {
         let mut ftime = File::create(TIME).unwrap();
         writeln!(ftime, "{}", Local::now().to_rfc3339()).expect("failed to write in file");
     }
-
+    
+    let mut time_of_nap = Duration::new(0, 0);
     //boucle principale du programme
     loop {
         //should not be needed anymore
@@ -86,6 +88,7 @@ fn run() {
                 update_time();
                 match req {
                     ExecuteCommand(cmd) => exec_command(cmd),
+                    FallAsleep(duration) => time_of_nap = duration,
                     _ => println!("Nop")
                 }
             },
@@ -105,6 +108,9 @@ fn run() {
             fs::remove_file(SERVICE).expect("Failed to delete SERVICE");
             break
         }
+
+        //durée du sleep
+        thread::sleep(time_of_nap);
     }
 }
 
@@ -139,17 +145,3 @@ fn update_time() {
 fn get_latest_action(mut simu_request: &Vec<BeaconAction>) -> Option<BeaconAction> {
     return simu_request.pop()
 }
-
-
-// les sleep a keeep
-
-fn new_napping_time(entry_string: &str) -> u64 {
-    //placeholder function
-    let mut entry_iter = entry_string.split(" ");
-    entry_iter.next();
-    return entry_iter.next().unwrap().parse::<u64>().unwrap()
-}
-
-        time_of_nap = new_napping_time(entry_string);
-        //durée du sleep
-        thread::sleep(time::Duration::from_secs(time_of_nap));
