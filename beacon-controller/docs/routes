@@ -1,4 +1,0 @@
-POST /beacons                           add_beacons(beacon: BeaconCommand)
-GET /beacons                            get_beacons()
-GET /beacons/:beacon_id/actions/next    get_latest_action(beacon_id: Uuid)
-POST /beacons/:beacon_id/actions        add_actions(beacon_id: Uuid, action: BeaconAction)

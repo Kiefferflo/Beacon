@@ -1,3 +1,6 @@
+use beacon_controller::run;
+
+#[tokio::main]
 fn main() {
-    println!("Hello, world")
+    run()
 }

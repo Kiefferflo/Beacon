@@ -21,19 +21,17 @@ impl BeaconController {
             state: beacon_command.state,
             ip: beacon_command.ip,
             role: beacon_command.role,
-        }).map_err(|e| RepositoryError(e))
+        })
     }
 
     pub fn get_beacon(&self, id: Uuid) -> ControllerResult<Beacon> {
         self.repository
             .get_beacon(id)
-            .map_err(|e| RepositoryError(e))
     }
 
     pub fn get_beacons(&self) -> ControllerResult<Vec<Beacon>> {
         self.repository
             .get_beacons()
-            .map_err(|e| RepositoryError(e))
     }
 }
 
@@ -42,20 +40,25 @@ pub struct ActionsController {
 }
 
 impl ActionsController {
-    pub fn create_action(&mut self, id: Uuid, beacon_action: BeaconAction) -> ControllerResult<()> {
+    pub fn new(repository: ActionsRepository) -> Self {
+        ActionsController { repository }
+    }
+
+
+    pub fn create_action(&self, id: Uuid, beacon_action: BeaconAction) -> ControllerResult<()> {
         self.repository
-            .enqueue_action(id, beacon_action)
-            .map_err(|e| RepositoryError(e))
+            .add_action(id, beacon_action)?;
+        Ok(())
     }
 
-    pub fn get_latest_action(&mut self, id: Uuid) -> ControllerResult<BeaconAction> {
-        self.repository.dequeue_action(id)
-            .map_err(|e| RepositoryError(e))
+    pub fn get_undone_action(&self, id: Uuid) -> ControllerResult<Vec<BeaconAction>> {
+        self.repository.get_undone_actions(id)
+    }
+
+    pub fn mark_as_done(&self, id: Uuid, action_id: Uuid) -> ControllerResult<()> {
+        self.repository.mark_as_done(id, action_id)
     }
 }
 
-pub enum ControllerError {
-    RepositoryError(repository::RepositoryError)
-}
 
-type ControllerResult<T> = Result<T, ControllerError>;
+type ControllerResult<T> = anyhow::Result<T>;

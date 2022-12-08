@@ -7,32 +7,15 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c7c8eff-5db2-458c-a59a-477d8eebe8f2" name="Changes" comment="exec on boot">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/docs/routes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/src/bin/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/src/controllers.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/src/kv.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/src/models.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon-controller/src/repository.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/beacon/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Beacon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Beacon.iml" afterDir="false" />
+    <list default="true" id="5c7c8eff-5db2-458c-a59a-477d8eebe8f2" name="Changes" comment="create http server">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/Beacon.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/beacon/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon-controller/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/beacon-controller/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon-controller/src/controllers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon-controller/src/controllers.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon-controller/src/kv.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon-controller/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon-controller/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon-controller/src/models.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon-controller/src/models.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beacon-controller/src/repository.rs" beforeDir="false" afterPath="$PROJECT_DIR$/beacon-controller/src/repository.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,16 +55,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/arendsyl/eisti/rust/beacon&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.hideNoCargoProjectNotifications/home/cytech/Work/ING3/Reactive/Beacon/beacon/src/main.rs&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/arendsyl/eisti/rust/beacon",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.hideNoCargoProjectNotifications/home/cytech/Work/ING3/Reactive/Beacon/beacon/src/main.rs": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/beacon-controller/src/bin" />
@@ -105,7 +93,9 @@
       <workItem from="1669798853835" duration="1019000" />
       <workItem from="1669906109371" duration="2392000" />
       <workItem from="1669969749164" duration="72000" />
-      <workItem from="1670227454470" duration="15833000" />
+      <workItem from="1670227454470" duration="15886000" />
+      <workItem from="1670271557080" duration="8000" />
+      <workItem from="1670522055063" duration="5701000" />
     </task>
     <task id="LOCAL-00001" summary="shell exec + structure">
       <created>1669124214999</created>
@@ -121,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669727575712</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="create http server">
+      <created>1670269198338</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670269198338</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +150,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="shell exec + structure" />
     <MESSAGE value="auto-destru" />
-    <option name="LAST_COMMIT_MESSAGE" value="auto-destru" />
+    <MESSAGE value="create http server" />
+    <option name="LAST_COMMIT_MESSAGE" value="create http server" />
   </component>
 </project>
