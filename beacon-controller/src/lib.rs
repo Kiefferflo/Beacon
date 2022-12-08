@@ -5,7 +5,7 @@ use crate::controllers::{ActionsController, BeaconController};
 use crate::repository::{ActionsRepository, BeaconRepository};
 
 mod controllers;
-mod models;
+pub mod models;
 mod repository;
 
 pub async fn run() {
